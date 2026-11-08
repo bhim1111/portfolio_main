@@ -1,0 +1,57 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
+
+{% block content %}
+<section class="project-detail-page">
+    <div class="container">
+        <a href="{% url 'projects' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Projects
+        </a>
+        
+        <div class="project-detail">
+            {% if project.image %}
+                <div class="project-detail-image">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                </div>
+            {% endif %}
+            
+            <div class="project-detail-content">
+                <h1>{{ project.title }}</h1>
+                <p class="project-date">
+                    <i class="far fa-calendar"></i> {{ project.created_at|date:"F Y" }}
+                </p>
+                <div class="project-description">
+                    <p>{{ project.description|linebreaks }}</p>
+                </div>
+                
+                <div class="project-tech-detail">
+                    <h3>Technologies Used</h3>
+                    <div class="tech-tags">
+                        {% for tech in project.get_technologies_list %}
+                            <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="project-links-detail">
+                    {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    {% endif %}
+                    {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" class="btn btn-secondary">
+                            <i class="fas fa-external-link-alt"></i> View Live Site
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+
